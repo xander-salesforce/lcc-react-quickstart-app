@@ -3,7 +3,7 @@ import * as ForceJsService from './ForceJsService';
 //import TabPanel from './TabPanel';
 
 export let requestUserInfo = id => {
-  let q = "SELECT name, email, companyname, usertype FROM user WHERE id= '" + id + "'";
+  let q = "SELECT name, email, companyname, title, usertype FROM user WHERE id= '" + id + "'";
   return ForceJsService.query(q);
 };
 
@@ -23,8 +23,8 @@ class ContextTab extends Component {
     }
     return (
       <div className="slds-card__body">
-        LCC allows you to access context information through the use of apex remote actions.
-        Below is a sample of that information: <br/><br/>
+        LCC allows make calls into apex using apex remote actions.
+        Below is a sample of some information retrieved using apex remote actions: <br/><br/>
 
         <table className="slds-table slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer">
           <thead>
@@ -52,7 +52,7 @@ class ContextTab extends Component {
                 <div className="slds-truncate" title={contextJson['CompanyName']}>{contextJson['CompanyName']}</div>
               </td>
               <td>
-                <div className="slds-truncate" title={contextJson['UserType']}>{contextJson['UserType']}</div>
+                <div className="slds-truncate" title={contextJson['Title']}>{contextJson['Title']}</div>
               </td>
               <td>
                 <div className="slds-truncate" title={contextJson['Email']}>{contextJson['Email']}</div>

@@ -28,7 +28,7 @@ class Tabset extends Component {
       // The apex returns a json object but all quotes are returned as &quot;
       let parse = result.replace(new RegExp("(&quot;)", 'g'), '"');
       let json_result = JSON.parse(parse);
-      this.setState({userInfo: json_result, userInfoId: json_result['Id']});
+      this.setState({userInfo: json_result});
     }
     else if (event.type === "exception") {
       console.warn(event.message + " : " + event.where);
@@ -46,7 +46,7 @@ class Tabset extends Component {
                 <span className="slds-text-heading_small slds-truncate slds-p-around_medium">
                   {greeting}
                 </span>
-                <h1 class="slds-page-header__title slds-truncate slds-align_absolute-center slds-p-bottom_medium" title="LCC React Quickstart App">LCC React Quickstart App</h1>
+                <h1 className="slds-page-header__title slds-truncate slds-align_absolute-center slds-p-bottom_medium" title="LCC React Quickstart App">LCC React Quickstart App</h1>
               </h2>
             </div>
           </header>
@@ -65,7 +65,7 @@ class Tabset extends Component {
               </li>
             </ul>
             <div>
-              <ContextTab isActive={this.state.activeTab === 'contextTab'} userInfoId={this.state.userInfoId}/>
+              <ContextTab isActive={this.state.activeTab === 'contextTab'} userInfo={this.state.userInfo}/>
               <EventTab isActive={this.state.activeTab === 'eventTab'} />
               <RemoteActionsTab isActive={this.state.activeTab === 'remoteActionsTab'} />
             </div>

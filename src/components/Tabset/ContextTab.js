@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as ForceJsService from './ForceJsService';
-//import TabPanel from './TabPanel';
+import PropTypes from 'prop-types';
 
 export let requestUserInfo = id => {
   let q = "SELECT name, email, companyname, title, usertype FROM user WHERE id= '" + id + "'";
@@ -8,22 +8,28 @@ export let requestUserInfo = id => {
 };
 
 class ContextTab extends Component {
+  static propTypes = {
+    isActive: PropTypes.string.isRequired,
+    userInfo: PropTypes.string.isRequired
+  }
   constructor(props) {
     super(props);
-    this.state = {isActive: false
+    this.state = {
+      isActive: false,
+      userInfo: props.userInfo
     };
   }
 
   renderContext(contextJson) {
     if (contextJson === undefined) {
       return (
-        <div></div>
+        <div/>
       );
     }
     return (
       <div className="slds-card__body">
-        LCC allows make calls into apex using apex remote actions.
-        Below is a sample of some information retrieved using apex remote actions: <br/><br/>
+        By making calls into Apex, we can determine context information about the current user.
+        Below is a sample of some context information that we have retrieved: <br/><br/>
 
         <table className="slds-table slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer">
           <thead>
@@ -64,18 +70,12 @@ class ContextTab extends Component {
   }
 
   render() {
-    if (!this.state.userInfo && this.props.userInfoId) {
-        requestUserInfo(this.props.userInfoId).then(userInfo => {
-          if (userInfo.totalSize == 1) {
-            this.setState({userInfo: userInfo.records[0]});
-          } else {
-            console.error("userInfo total size: " + userInfo.totalSize);
-          }
-        });
+    if (!this.state.userInfo && this.props.userInfo) {
+      this.setState({userInfo: this.props.userInfo});
     }
     let userInfoParsed = this.state.userInfo ? this.renderContext(this.state.userInfo) : "";
     return (
-      <div id="tab-default-1" className={'slds-tabs_default__content ' + (this.props.isActive ? 'slds-show' : 'slds-hide') } role="tabpanel" aria-labelledby="tab-default-1__item">
+      <div id="tab-default-1" className={'slds-tabs_default__content ' + (this.props.isActive ? 'slds-show' : 'slds-hide')} role="tabpanel" aria-labelledby="tab-default-1__item">
         {userInfoParsed}
       </div>
     );

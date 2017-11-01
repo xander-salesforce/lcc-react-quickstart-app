@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import * as LCC from 'lightning-container';
 import ButtonIcon from './ButtonIcon';
+import PropTypes from 'prop-types';
 
 class AccountEntry extends Component {
+  static propTypes = {
+    isActive: PropTypes.string.isRequired,
+    accountId: PropTypes.string.isRequired,
+    accountType: PropTypes.string.isRequired,
+    accountValue: PropTypes.string.isRequired
+  }
+
   constructor(props) {
     super(props);
     this.state = {

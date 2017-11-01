@@ -30,7 +30,7 @@ export let Icon = React.createClass({
     getDefaultProps() {
         return {
             category: "standard"
-        }
+        };
     },
 
     render() {

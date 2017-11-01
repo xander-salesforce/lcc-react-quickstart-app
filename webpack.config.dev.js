@@ -11,25 +11,25 @@ function ArchiverPlugin() {
 }
 
 ArchiverPlugin.prototype.apply = function(compiler) {
-  var manifestPath = this.manifestPath;
-  var manifestName = this.manifestName;
-  var archivePath = this.archivePath;
+  let manifestPath = this.manifestPath;
+  let manifestName = this.manifestName;
+  let archivePath = this.archivePath;
   compiler.plugin("after-emit", function(compiler, callback) {
-      var output = fs.createWriteStream(archivePath);
-      var archive = archiver("zip");
+      let output = fs.createWriteStream(archivePath);
+      let archive = archiver("zip");
       archive.pipe(output);
-      for (var fileName in compiler.assets) {
+      for (let fileName in compiler.assets) {
           if (compiler.assets.hasOwnProperty(fileName)) {
-              var stream = fs.createReadStream(compiler.assets[fileName].existsAt);
+              let stream = fs.createReadStream(compiler.assets[fileName].existsAt);
               archive.append(stream, {name: fileName});
           }
       }
-      var manifestStream = fs.createReadStream(manifestPath);
+      let manifestStream = fs.createReadStream(manifestPath);
       archive.append(manifestStream, {name: manifestName});
       archive.finalize();
       callback();
   });
-}
+};
 
 export default {
   resolve: {
@@ -114,20 +114,6 @@ export default {
           }
         ]
       },
-      // {
-      //   test: /\.svg$/,
-      //   use: [
-      //     {
-      //       loader: "babel-loader"
-      //     },
-      //     {
-      //       loader: "react-svg-loader",
-      //       options: {
-      //         jsx: true // true outputs JSX tags
-      //       }
-      //     }
-      //   ]
-      // },
       {
         test: /\.(jpe?g|png|gif|ico)$/i,
         use: [
@@ -141,7 +127,7 @@ export default {
       },
       {
         test: /(\.css|\.scss|\.sass)$/,
-/*        exclude: /node_modules/, */
+        exclude: /node_modules/,
         use: [
           'style-loader',
           {

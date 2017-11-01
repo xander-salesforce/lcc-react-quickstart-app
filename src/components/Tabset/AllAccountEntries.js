@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import * as LCC from 'lightning-container';
 import AccountEntry from './AccountEntry';
+import PropTypes from 'prop-types';
 
 class AllAccountEntries extends Component {
+  static propTypes = {
+    queryReq: PropTypes.string.isRequired
+  }
+
   constructor(props) {
     super(props);
     
@@ -39,7 +44,7 @@ class AllAccountEntries extends Component {
     let account_row = this.state.itemsToQuery
       .split(',')
       .filter((entry) => entry != 'Id')
-      .map((acct_key) => <AccountEntry accountType={acct_key} accountId={account['Id']} accountValue={account[acct_key] || ''}/>)
+      .map((acct_key) => <AccountEntry accountType={acct_key} accountId={account['Id']} accountValue={account[acct_key] || ''}/>);
 
       return (
       <tr className="slds-hint-parent">      
@@ -50,9 +55,7 @@ class AllAccountEntries extends Component {
 
   render() {
     if (!this.state.accounts) {
-      return (
-        <div></div>
-      );
+      return (<div/>);
     }
     return (
       <div className="slds-card__body">
@@ -65,10 +68,11 @@ class AllAccountEntries extends Component {
             {
               this.state.itemsToQuery.split(',')
                 .filter((entry) => entry != 'Id')
-                .map((fieldName) =>
-                  <th scope="col">
-                    <div className="slds-truncate" title={fieldName}>{fieldName}</div>
-                  </th>
+                .map((fieldName) => (
+                    <th scope="col">
+                      <div className="slds-truncate" title={fieldName}>{fieldName}</div>
+                    </th>
+                  )
                 )
             }
             </tr>

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import * as LCC from 'lightning-container';
+import PropTypes from 'prop-types';
 
 class EventTab extends Component {
+  static propTypes = {
+    isActive: PropTypes.string.isRequired,
+  }
   constructor(props) {
     super(props);
     this.state = {isActive: false};
@@ -44,7 +48,7 @@ class EventTab extends Component {
   getMessageForm() {
     return (
       <div className="slds-form-element">
-        <label className="slds-form-element__label" for="input-unique-id">Toast Message:</label>
+        <label className="slds-form-element__label" htmlFor="input-unique-id">Toast Message:</label>
         <div className="slds-form-element__control">
           <input type="text" id="input-unique-id" className="slds-input" placeholder="Placeholder Text" value={this.state.sendMessageValue} onChange={this.handleMessageChange} />
         </div>

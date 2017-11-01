@@ -1,0 +1,37 @@
+global with sharing class QuickStartAppController {
+    @RemoteAction
+    global static String getUserInfo(String ignoreField) {
+        User usr = [SELECT name from user where id=:UserInfo.getUserId()];
+        return JSON.serialize(usr);
+    }
+    
+	@RemoteAction
+    global static String getAllAccounts(String ignoreField) {
+        List<Account> accounts = [SELECT Name, AccountNumber, AnnualRevenue, Industry from Account];
+        return JSON.serialize(accounts);
+    }
+    
+    @RemoteAction
+    global static String updateAccount(String updateStr) {
+        List<String> updateList = updateStr.split('\\|');
+        Map<String, String> accountJson = new Map<String, String>();
+        accountJson.put('id', updateList.get(0));
+        accountJson.put('name', updateList.get(1));
+        accountJson.put('value', updateList.get(2));
+        
+        Account accountToUpdate = [SELECT Name, Industry, AccountNumber, AnnualRevenue FROM Account WHERE Id= :accountJson.get('id')];
+        if (accountJson.get('name').equalsIgnoreCase('name')) {
+        	accountToUpdate.Name = accountJson.get('value');
+        } else if (accountJson.get('name').equalsIgnoreCase('Industry')) {
+        	accountToUpdate.Industry = accountJson.get('value');
+        } else if (accountJson.get('name').equalsIgnoreCase('AccountNumber')) {
+        	accountToUpdate.AccountNumber = accountJson.get('value');
+        } else if (accountJson.get('name').equalsIgnoreCase('AnnualRevenue')) {
+        	accountToUpdate.AnnualRevenue = Integer.valueOf(accountJson.get('value'));
+        }
+        update accountToUpdate;
+
+        accountJson.put('status', 'successful');
+        return JSON.serialize(accountJson);
+    }
+}

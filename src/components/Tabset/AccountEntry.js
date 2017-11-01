@@ -21,7 +21,6 @@ class AccountEntry extends Component {
 
   handleKeyDown (event) {
     if ( event.key === "Enter" ) {
-      // this.setState({editingField: false});
      this.handleAccountBackendUpdate( event );
     }
   }
@@ -34,18 +33,18 @@ class AccountEntry extends Component {
     let update = [this.props.accountId, 
                  this.props.accountType,
                  event.target.value];
-    console.warn("update: " + update);
-    /* ftplatform.QuickStartAppController */
-    LCC.callApex("ftplatform.QuickStartAppController.updateAccount",
+    LCC.callApex("QuickStartAppController.updateAccount",
                  update.join('|'), this.handleAccountUpdateResponse,
                  {escape: true});
   }
 
   handleAccountUpdateResponse(result, event) {
     if (event.status) {
-      // The apex returns a json object but all quotes are returned as &quot;
+      /*
+       The apex returns a json object but all quotes are
+       returned as &quot; convert these to quotes
+       */
       let parse = result.replace(new RegExp("(&quot;)", 'g'), '"');
-      console.warn(parse);
       let json_result = JSON.parse(parse);
       if (json_result['status'] == 'successful') {
         this.setState({prevValue: json_result['value'], editingField: false});

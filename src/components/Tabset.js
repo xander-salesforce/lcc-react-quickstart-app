@@ -9,8 +9,6 @@ class Tabset extends Component {
     super(props);
     this.state = {
       activeTab: 'contextTab',
-      // userInfo: {"Name": "Xander Dale"},
-      // userInfoId: "123049809384"
     };
     this.handleUserQueryResponse = this.handleUserQueryResponse.bind(this);
     this.getUserInfo();
@@ -20,8 +18,7 @@ class Tabset extends Component {
   }
 
   getUserInfo() {
-    /* ftplatform.QuickStartAppController */
-    LCC.callApex("ftplatform.QuickStartAppController.getUserInfo",
+    LCC.callApex("QuickStartAppController.getUserInfo",
                  "", this.handleUserQueryResponse,
                  {escape: true});
   }
@@ -32,7 +29,6 @@ class Tabset extends Component {
       let parse = result.replace(new RegExp("(&quot;)", 'g'), '"');
       let json_result = JSON.parse(parse);
       this.setState({userInfo: json_result, userInfoId: json_result['Id']});
-      console.warn("===== top.userInfo: " + parse  + "\n===== top.userInfoId: " + this.state.userInfoId);
     }
     else if (event.type === "exception") {
       console.warn(event.message + " : " + event.where);

@@ -11,7 +11,6 @@ class ContextTab extends Component {
   constructor(props) {
     super(props);
     this.state = {isActive: false
-      // userInfo: {"Name": "Xander Dale", "CompanyName": "AlphaCo", "Email": "xander@salesforce.com", "UserType": "Developer"}
     };
   }
 

@@ -18,25 +18,21 @@ class EventTab extends Component {
   }
 
   handleToast(event) {
-    console.warn("Sending message " + this.state.sendMessageValue);
     this.sendMessage("LccToastEvent", "info", this.state.sendMessageValue);
     return event;
   }
 
   handleErrorToast(event) {
-    console.warn("Sending message " + this.state.sendMessageValue);
     this.sendMessage("LccToastEvent", "error", this.state.sendMessageValue);
     return event;
   }
 
   handleWarningToast(event) {
-    console.warn("Sending message " + this.state.sendMessageValue);
     this.sendMessage("LccToastEvent", "warning", this.state.sendMessageValue);
     return event;
   }
 
   handleSuccessToast(event) {
-    console.warn("Sending message " + this.state.sendMessageValue);
     this.sendMessage("LccToastEvent", "success", this.state.sendMessageValue);
     return event;
   }

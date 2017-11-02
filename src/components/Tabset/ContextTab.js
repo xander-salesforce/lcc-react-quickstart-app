@@ -9,14 +9,16 @@ export let requestUserInfo = id => {
 
 class ContextTab extends Component {
   static propTypes = {
-    isActive: PropTypes.string.isRequired,
-    userInfo: PropTypes.string.isRequired
+    isActive: PropTypes.bool.isRequired,
+    userInfo: PropTypes.string.isRequired,
+    enableSlds: PropTypes.bool.isRequired
   }
   constructor(props) {
     super(props);
     this.state = {
       isActive: false,
-      userInfo: props.userInfo
+      userInfo: props.userInfo,
+      enableSlds: props.enableSlds
     };
   }
 
@@ -26,14 +28,17 @@ class ContextTab extends Component {
         <div/>
       );
     }
+    if (this.props.enableSlds != this.state.enableSlds) {
+      this.setState({enableSlds: this.props.enableSlds});
+    }
     return (
       <div className="slds-card__body">
         By making calls into Apex, we can determine context information about the current user.
         Below is a sample of some context information that we have retrieved: <br/><br/>
 
-        <table className="slds-table slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer">
+        <table className={this.state.enableSlds ? "slds-table slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer" : ""}>
           <thead>
-            <tr className="slds-text-title_caps">
+            <tr className={this.state.enableSlds ? "slds-text-title_caps" : ""}>
               <th scope="col">
                 <div className="slds-truncate" title="Name">Name</div>
               </th>

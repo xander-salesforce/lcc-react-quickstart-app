@@ -14,7 +14,7 @@ class RemoteActionsTab extends Component {
 
 
   render() {
-    if (this.props.isActive !== undefined) {
+    if (this.props.isActive !== undefined && this.state.isActive !== this.props.isActive) {
       this.setState({isActive: this.props.isActive});
     }
     return (

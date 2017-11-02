@@ -9,8 +9,11 @@ class Tabset extends Component {
     super(props);
     this.state = {
       activeTab: 'contextTab',
+      enableSlds: false
     };
     this.handleUserQueryResponse = this.handleUserQueryResponse.bind(this);
+    this.handleSldsToggle = this.handleSldsToggle.bind(this);
+    this.renderToggle = this.renderToggle.bind(this);
     this.getUserInfo();
   }
   updateActiveTab(tabName) {
@@ -35,11 +38,25 @@ class Tabset extends Component {
     }
   }
 
+  handleSldsToggle() {
+    this.setState(prevState => ({
+      enableSlds: !prevState.enableSlds
+    }));
+  }
+
+  renderToggle() {
+    let classes = this.state.enableSlds? "slds-button slds-button_success" : "slds-button slds-button_neutral";
+    return (
+      <button aria-pressed="true" onClick={this.handleSldsToggle} className={classes} role="button">Enable SLDS</button>
+    );
+  }
+
   render() {
     let greeting = (typeof this.state.userInfo !== 'undefined')? 'Hello ' + this.state.userInfo['Name'] + '!' : '';
+    
     return (
       <div className="slds-grid slds-grid_vertical-align-center slds-grid_align-center">
-        <article className="slds-card slds-container_large">
+        <article className="slds-container_large slds-grid--frame slds-p-around_small">
           <header className="slds-media slds-media_center slds-has-flexi-truncate">
             <div className="slds-media__body">
               <h2>
@@ -48,6 +65,9 @@ class Tabset extends Component {
                 </span>
                 <h1 className="slds-page-header__title slds-truncate slds-align_absolute-center slds-p-bottom_medium" title="LCC React Quickstart App">LCC React Quickstart App</h1>
               </h2>
+            </div>
+            <div className="slds-grid_align-right">
+              {this.renderToggle()}
             </div>
           </header>
           <div className="slds-tabs_default">
@@ -65,9 +85,9 @@ class Tabset extends Component {
               </li>
             </ul>
             <div>
-              <ContextTab isActive={this.state.activeTab === 'contextTab'} userInfo={this.state.userInfo}/>
-              <EventTab isActive={this.state.activeTab === 'eventTab'} />
-              <RemoteActionsTab isActive={this.state.activeTab === 'remoteActionsTab'} />
+              <ContextTab isActive={this.state.activeTab === 'contextTab'} enableSlds={this.state.enableSlds} userInfo={this.state.userInfo}/>
+              <EventTab isActive={this.state.activeTab === 'eventTab'} enableSlds={this.state.enableSlds} />
+              <RemoteActionsTab isActive={this.state.activeTab === 'remoteActionsTab'} enableSlds={this.state.enableSlds} />
             </div>
           </div>
         </article>
